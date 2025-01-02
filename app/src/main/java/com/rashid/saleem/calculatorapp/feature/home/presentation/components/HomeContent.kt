@@ -27,7 +27,6 @@ import com.rashid.saleem.calculatorapp.core.presentation.theme.LightBlue2
 import com.rashid.saleem.calculatorapp.feature.home.presentation.HomeAction
 import com.rashid.saleem.calculatorapp.feature.home.presentation.HomeUiState
 import com.rashid.saleem.calculatorapp.feature.home.presentation.OperationEnum
-import com.rashid.saleem.calculatorapp.feature.home.presentation.previewHomeUiState
 
 @Composable
 fun HomeContent(
