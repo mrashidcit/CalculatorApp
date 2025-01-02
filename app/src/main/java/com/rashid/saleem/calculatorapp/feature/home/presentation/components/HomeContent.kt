@@ -57,7 +57,7 @@ fun HomeContent(
                 modifier = Modifier.fillMaxWidth(),
                 color = Color.Gray,
                 textAlign = TextAlign.Right,
-                fontSize = 36.sp,
+                fontSize = 26.sp,
             )
         }
 

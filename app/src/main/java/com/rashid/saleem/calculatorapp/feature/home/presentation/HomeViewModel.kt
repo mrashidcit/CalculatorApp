@@ -14,7 +14,7 @@ class HomeViewModel: ViewModel() {
     fun onAction(action: HomeAction) {
         when (action) {
             HomeAction.Backspace -> performBackspace()
-            HomeAction.Calculate -> Unit
+            HomeAction.Calculate -> calculate()
             HomeAction.Clear -> performClear()
             HomeAction.DecimalPoint -> enterDecimalPoint()
             HomeAction.DoubleZero -> enterNumber("00")
@@ -23,6 +23,18 @@ class HomeViewModel: ViewModel() {
                 operation = action.value
             )
         }
+    }
+
+    private fun calculate() {
+        val result = uiState.value.result
+
+        if (result.isEmpty()) return
+        updateUiState(
+            value1 = result,
+            value2 = "",
+            result = ""
+        )
+        updateOperationInUiState(null)
     }
 
     private fun enterDecimalPoint() {
@@ -74,6 +86,7 @@ class HomeViewModel: ViewModel() {
             updateUiState(
                 value2 = uiState.value.value2.dropLast(1)
             )
+            calculateResult()
             return
         }
 
@@ -116,6 +129,37 @@ class HomeViewModel: ViewModel() {
             value2 = updatedValue2
         )
 
+        calculateResult()
+
+    }
+
+    private fun calculateResult() {
+        val value1 = uiState.value.value1
+        val value2 = uiState.value.value2
+        val operation = uiState.value.operation
+
+        val allowOperation = value1.isNotEmpty() && value2.isNotEmpty() && operation != null
+        if (!allowOperation) {
+            updateUiState(
+                result = ""
+            )
+            return
+        }
+
+        val value1Number = value1.toInt()
+        val value2Number = value2.toInt()
+
+        val result = when (operation) {
+            OperationEnum.ADD -> value1Number + value2Number
+            OperationEnum.SUBTRACT -> value1Number - value2Number
+            OperationEnum.MULTIPLY -> value1Number * value2Number
+            OperationEnum.DIVIDE -> value1Number / value2Number
+            OperationEnum.PERCENTAGE -> (value2Number / 100.0) * value1Number
+            null -> 0
+        }
+        updateUiState(
+            result = result.toString()
+        )
     }
 
     private fun updateUiState(
