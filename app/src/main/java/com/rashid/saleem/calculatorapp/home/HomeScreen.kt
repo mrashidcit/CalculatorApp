@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rashid.saleem.calculatorapp.ui.theme.CalculatorAppTheme
@@ -36,8 +35,7 @@ fun HomeScreen(
                 .weight(1f)
                 .padding(
                     horizontal = 16.dp,
-                )
-            ,
+                ),
             verticalArrangement = Arrangement.Center,
         ) {
             Text(
@@ -58,71 +56,110 @@ fun HomeScreen(
             )
 
         }
-        ButtonsContainer()
+        ButtonsContainer(
+            action = { }
+        )
     }
 }
 
 @Composable
-private fun ButtonsContainer() {
+private fun ButtonsContainer(
+    action: (HomeAction) -> Unit,
+) {
     Row(
         modifier = Modifier.fillMaxWidth()
     ) {
-        TextButton(text = "C", modifier = Modifier.weight(1f), onClick = { })
-        TextButton(text = "%", modifier = Modifier.weight(1f), onClick = { })
-        TextButton(text = "<-", modifier = Modifier.weight(1f), onClick = { })
+        TextButton(text = "C", modifier = Modifier.weight(1f),
+            onClick = { action(HomeAction.Clear) }
+        )
+        TextButton(text = "%", modifier = Modifier.weight(1f),
+            onClick = { action(HomeAction.Operation(OperationEnum.PERCENTAGE)) }
+        )
+        TextButton(text = "<-", modifier = Modifier.weight(1f),
+            onClick = { action(HomeAction.Backspace) }
+        )
         TextButton(
             text = "/",
             modifier = Modifier.weight(1f),
             textColor = LightBlue2,
-            onClick = { })
+            onClick = { action(HomeAction.Operation(OperationEnum.DIVIDE)) }
+        )
     }
     Row(
         modifier = Modifier.fillMaxWidth()
     ) {
-        TextButton(text = "7", modifier = Modifier.weight(1f), onClick = { })
-        TextButton(text = "8", modifier = Modifier.weight(1f), onClick = { })
-        TextButton(text = "9", modifier = Modifier.weight(1f), onClick = { })
+        TextButton(text = "7", modifier = Modifier.weight(1f),
+            onClick = { action(HomeAction.Number(7)) }
+        )
+        TextButton(text = "8", modifier = Modifier.weight(1f),
+            onClick = { action(HomeAction.Number(8)) }
+        )
+        TextButton(text = "9", modifier = Modifier.weight(1f),
+            onClick = { action(HomeAction.Number(9)) }
+        )
         TextButton(
             text = "x",
             modifier = Modifier.weight(1f),
             textColor = LightBlue2,
-            onClick = { })
+            onClick = { action(HomeAction.Operation(OperationEnum.MULTIPLY)) }
+        )
     }
     Row(
         modifier = Modifier.fillMaxWidth()
     ) {
-        TextButton(text = "4", modifier = Modifier.weight(1f), onClick = { })
-        TextButton(text = "5", modifier = Modifier.weight(1f), onClick = { })
-        TextButton(text = "6", modifier = Modifier.weight(1f), onClick = { })
+        TextButton(text = "4", modifier = Modifier.weight(1f),
+            onClick = { action(HomeAction.Number(4)) }
+        )
+        TextButton(text = "5", modifier = Modifier.weight(1f),
+            onClick = { action(HomeAction.Number(5)) }
+        )
+        TextButton(text = "6", modifier = Modifier.weight(1f),
+            onClick = { action(HomeAction.Number(6)) }
+        )
         TextButton(
             text = "-",
             modifier = Modifier.weight(1f),
             textColor = LightBlue2,
-            onClick = { })
+            onClick = { action(HomeAction.Operation(OperationEnum.SUBTRACT)) }
+        )
     }
     Row(
         modifier = Modifier.fillMaxWidth()
     ) {
-        TextButton(text = "1", modifier = Modifier.weight(1f), onClick = { })
-        TextButton(text = "2", modifier = Modifier.weight(1f), onClick = { })
-        TextButton(text = "3", modifier = Modifier.weight(1f), onClick = { })
+        TextButton(text = "1", modifier = Modifier.weight(1f),
+            onClick = { action(HomeAction.Number(1)) }
+        )
+        TextButton(text = "2", modifier = Modifier.weight(1f),
+            onClick = { action(HomeAction.Number(2)) }
+        )
+        TextButton(text = "3", modifier = Modifier.weight(1f),
+            onClick = { action(HomeAction.Number(3)) }
+        )
         TextButton(
             text = "+",
             modifier = Modifier.weight(1f),
             textColor = LightBlue2,
-            onClick = { })
+            onClick = { action(HomeAction.Operation(OperationEnum.PLUS)) }
+        )
     }
     Row(
         modifier = Modifier.fillMaxWidth()
     ) {
-        TextButton(text = "00", modifier = Modifier.weight(1f), onClick = { })
-        TextButton(text = "0", modifier = Modifier.weight(1f), onClick = { })
-        TextButton(text = ".", modifier = Modifier.weight(1f), onClick = { })
+        TextButton(text = "00", modifier = Modifier.weight(1f),
+            onClick = { action(HomeAction.DoubleZero) }
+        )
+        TextButton(text = "0", modifier = Modifier.weight(1f),
+            onClick = { action(HomeAction.Number(0)) }
+        )
+        TextButton(text = ".", modifier = Modifier.weight(1f),
+            onClick = { action(HomeAction.DecimalPoint) }
+        )
         TextButton(
             text = "=",
             modifier = Modifier.weight(1f),
             textColor = LightBlue2,
-            onClick = { })
+            onClick = { action(HomeAction.Calculate) }
+        )
     }
 }
 
