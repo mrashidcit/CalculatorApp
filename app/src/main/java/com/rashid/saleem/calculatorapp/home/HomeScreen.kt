@@ -13,12 +13,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rashid.saleem.calculatorapp.ui.theme.CalculatorAppTheme
 import com.rashid.saleem.calculatorapp.ui.theme.LightBlue1
 import com.rashid.saleem.calculatorapp.ui.theme.LightBlue2
@@ -26,7 +28,11 @@ import com.rashid.saleem.calculatorapp.ui.theme.LightBlue2
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
+    viewModel: HomeViewModel = viewModel(),
 ) {
+
+    val uiState = viewModel.uiState.collectAsState().value
+
     Column(
         modifier = modifier.fillMaxSize()
     ) {
@@ -39,7 +45,7 @@ fun HomeScreen(
             verticalArrangement = Arrangement.Center,
         ) {
             Text(
-                text = "2 + 2",
+                text = uiState.value1 + (uiState.operation?.symbol ?: "" ) + uiState.value2,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Right,
                 fontSize = 46.sp,
@@ -47,7 +53,7 @@ fun HomeScreen(
             )
             Spacer(modifier = Modifier.height(6.dp))
             Text(
-                text = "4",
+                text = uiState.result,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Right,
                 fontSize = 26.sp,
@@ -57,7 +63,7 @@ fun HomeScreen(
 
         }
         ButtonsContainer(
-            action = { }
+            action = viewModel::onAction
         )
     }
 }

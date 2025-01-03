@@ -1,7 +1,5 @@
 package com.rashid.saleem.calculatorapp.home
 
-import org.jetbrains.annotations.Range
-
 sealed interface HomeAction {
     data object Clear: HomeAction
     data object Backspace: HomeAction
@@ -13,10 +11,10 @@ sealed interface HomeAction {
 
 }
 
-enum class OperationEnum(symbol: String) {
+enum class OperationEnum(val symbol: String) {
     PLUS("+"),
     SUBTRACT("-"),
-    MULTIPLY("X"),
+    MULTIPLY("x"),
     DIVIDE("/"),
     PERCENTAGE("%"),
 }
