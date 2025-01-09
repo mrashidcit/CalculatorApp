@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,16 +21,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rashid.saleem.calculatorapp.ui.theme.CalculatorAppTheme
 import com.rashid.saleem.calculatorapp.ui.theme.LightBlue1
 import com.rashid.saleem.calculatorapp.ui.theme.LightBlue2
 
 @Composable
 fun HomeScreen(
-    uiState: HomeUiState,
-    modifier: Modifier = Modifier,
-    onAction: (HomeAction) -> Unit,
+    viewModel: HomeViewModel = viewModel<HomeViewModel>(),
     ) {
+
+    val uiState = viewModel.uiState.collectAsState().value
 
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -39,7 +41,9 @@ fun HomeScreen(
             uiState = uiState,
             modifier = Modifier.weight(1f)
         )
-        ButtonsContainer(onAction)
+        ButtonsContainer(
+            onAction = viewModel::onAction
+        )
     }
 }
 
@@ -174,6 +178,7 @@ private fun TextButton(
     )
 }
 
+/**
 @Preview
 @Composable
 private fun HomeScreenPreview() {
@@ -198,3 +203,4 @@ private fun HomeScreenPreview() {
         }
     }
 }
+*/
